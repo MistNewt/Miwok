@@ -26,8 +26,6 @@ import java.util.ArrayList;
 
 public class FamilyActivity extends AppCompatActivity {
 
-    private MediaPlayer mMediaPlayer;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -48,13 +46,5 @@ public class FamilyActivity extends AppCompatActivity {
         WordAdapter adapter = new WordAdapter(this, words, R.color.category_family);
         ListView listView = (ListView) findViewById(R.id.list);
         listView.setAdapter(adapter);
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                int soundResourceId = words.get(position).getSoundResourceId();
-                mMediaPlayer = MediaPlayer.create(FamilyActivity.this,soundResourceId);
-                mMediaPlayer.start();
-            }
-        });
     }
 }

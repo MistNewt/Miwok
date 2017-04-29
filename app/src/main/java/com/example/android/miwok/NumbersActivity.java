@@ -32,7 +32,6 @@ import java.util.ArrayList;
 import static android.media.CamcorderProfile.get;
 
 public class NumbersActivity extends AppCompatActivity {
-    private MediaPlayer mMediaPlayer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,14 +53,6 @@ public class NumbersActivity extends AppCompatActivity {
         WordAdapter adapter = new WordAdapter(this,words,R.color.category_numbers);
         ListView listView = (ListView) findViewById(R.id.list);
         listView.setAdapter(adapter);
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                int soundResourceId = words.get(position).getSoundResourceId();
-                mMediaPlayer = MediaPlayer.create(NumbersActivity.this,soundResourceId);
-                mMediaPlayer.start();
-            }
-        });
     }
 
 }
