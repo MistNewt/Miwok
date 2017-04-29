@@ -23,7 +23,25 @@ import static com.example.android.miwok.R.mipmap.ic_launcher;
  */
 
 public class WordAdapter extends ArrayAdapter<Word> {
+
     private int mBackgroundColor;
+    private MediaPlayer mMediaPlayer;
+
+    private void releaseMediaResource() {
+        if(mMediaPlayer!=null){
+            // Release media player resources
+            mMediaPlayer.release();
+            mMediaPlayer = null;
+        }
+    }
+    //On completion listner
+    private MediaPlayer.OnCompletionListener mCompletionListener = new MediaPlayer.OnCompletionListener() {
+        @Override
+        public void onCompletion(MediaPlayer mp) {
+            releaseMediaResource();
+        }
+    };
+
     public WordAdapter(Activity context, ArrayList<Word> word,int backgroundColor) {
         // Here, we initialize the ArrayAdapter's internal storage for the context and the list.
         // the second argument is used when the ArrayAdapter is populating a single TextView.
@@ -64,6 +82,20 @@ public class WordAdapter extends ArrayAdapter<Word> {
         View textContainer = listItemView.findViewById(R.id.text_container);
         int color = ContextCompat.getColor(getContext(),mBackgroundColor);
         textContainer.setBackgroundColor(color);
+
+        //Setting sound resources
+        textContainer.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //Release previously allocated media resource
+                releaseMediaResource();
+                //Init new media resource
+                mMediaPlayer = MediaPlayer.create(getContext(),currentWord.getSoundResourceId());
+                mMediaPlayer.start();
+                //Releasing resourece on completion
+                mMediaPlayer.setOnCompletionListener(mCompletionListener);
+            }
+        });
 
         return listItemView;
     }
