@@ -1,3 +1,8 @@
+This is my copy of the Miwok app, created while learning Android on Udacity.
+I am not the owner of the app. Below is the original readme of the Miwok app.
+=========================================================================================
+
+
 Miwok App
 ===================================
 
