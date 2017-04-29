@@ -28,6 +28,20 @@ public class FamilyActivity extends AppCompatActivity {
 
     private MediaPlayer mMediaPlayer;
 
+    private void releaseMediaResource() {
+        if (mMediaPlayer != null) {
+            mMediaPlayer.release();
+            mMediaPlayer = null;
+        }
+    }
+
+    MediaPlayer.OnCompletionListener mCompletionListener = new MediaPlayer.OnCompletionListener() {
+        @Override
+        public void onCompletion(MediaPlayer mp) {
+            releaseMediaResource();
+        }
+    };
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -52,8 +66,12 @@ public class FamilyActivity extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 int soundResourceId = words.get(position).getSoundResourceId();
-                mMediaPlayer = MediaPlayer.create(FamilyActivity.this,soundResourceId);
+                // Release previously allocated media resource because
+                // a new media resource will be allocated
+                releaseMediaResource();
+                mMediaPlayer = MediaPlayer.create(FamilyActivity.this, soundResourceId);
                 mMediaPlayer.start();
+                mMediaPlayer.setOnCompletionListener(mCompletionListener);
             }
         });
     }
