@@ -24,12 +24,13 @@ import static com.example.android.miwok.R.mipmap.ic_launcher;
 
 public class WordAdapter extends ArrayAdapter<Word> {
     private int mBackgroundColor;
-    public WordAdapter(Activity context, ArrayList<Word> word,int backgroundColor) {
+
+    public WordAdapter(Activity context, ArrayList<Word> word, int backgroundColor) {
         // Here, we initialize the ArrayAdapter's internal storage for the context and the list.
         // the second argument is used when the ArrayAdapter is populating a single TextView.
         // Because this is a custom adapter for two TextViews and an ImageView, the adapter is not
         // going to use this second argument, so it can be any value. Here, we used 0.
-        super(context,0,word);
+        super(context, 0, word);
         mBackgroundColor = backgroundColor;
     }
 
@@ -54,15 +55,14 @@ public class WordAdapter extends ArrayAdapter<Word> {
 
         //ImageView
         ImageView image = (ImageView) listItemView.findViewById(R.id.image);
-        if(currentWord.hasImage()) {
+        if (currentWord.hasImage()) {
             image.setImageResource(currentWord.getImageResourceId());
-        }
-        else {
+        } else {
             image.setVisibility(View.GONE);
         }
         //Setting background color
         View textContainer = listItemView.findViewById(R.id.text_container);
-        int color = ContextCompat.getColor(getContext(),mBackgroundColor);
+        int color = ContextCompat.getColor(getContext(), mBackgroundColor);
         textContainer.setBackgroundColor(color);
 
         return listItemView;
